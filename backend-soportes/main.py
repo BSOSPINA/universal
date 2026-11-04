@@ -58,10 +58,14 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 # Se desactivan /docs, /redoc y /openapi.json: no hay por que mostrar la API a desconocidos.
 app = FastAPI(title=NOMBRE_EMPRESA, docs_url=None, redoc_url=None, openapi_url=None)
 
-# Habilitar CORS
+# Habilitar CORS para Vercel y entorno local
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ORIGENES,
+    allow_origins=[
+        "https://universal-frontend-soportes.vercel.app",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
