@@ -1,6 +1,6 @@
     // Si la página la sirve el propio servidor (local o en Internet) las rutas son relativas.
     // Solo si abres el HTML con doble clic (file://) apunta al servidor local.
-    const API = location.protocol === "file:" ? "http://127.0.0.1:8000" : "";
+    const API = "https://universal-r9da.onrender.com";
     let token = sessionStorage.getItem("token");
     if (!token) location.href = "login.html";
 
