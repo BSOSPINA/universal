@@ -35,8 +35,9 @@ if len(JWT_SECRET) < 32:
     raise RuntimeError("JWT_SECRET es muy corto: usa una cadena aleatoria de al menos 32 caracteres "
                        "(python -c \"import secrets; print(secrets.token_urlsafe(48))\")")
 JWT_HORAS = float(os.getenv("JWT_HORAS", "2"))
-# Por defecto NO se abre CORS: el front-end lo sirve este mismo servidor, asi que no hace falta.
-ORIGENES = [o.strip() for o in os.getenv("ORIGENES", "").split(",") if o.strip()]
+
+# Permite peticiones CORS desde cualquier origen (Vercel, localhost, etc.)
+ORIGENES = [o.strip() for o in os.getenv("ORIGENES", "").split(",") if o.strip()] or ["*"]
 
 # Envio de codigos de verificacion por correo (SMTP). Ver .env.example
 SMTP_HOST = os.getenv("SMTP_HOST", "")
@@ -56,14 +57,15 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # Se desactivan /docs, /redoc y /openapi.json: no hay por que mostrar la API a desconocidos.
 app = FastAPI(title=NOMBRE_EMPRESA, docs_url=None, redoc_url=None, openapi_url=None)
-if ORIGENES:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=ORIGENES,
-        allow_credentials=False,
-        allow_methods=["GET", "POST", "PUT", "DELETE"],
-        allow_headers=["Authorization", "Content-Type"],
-    )
+
+# Habilitar CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ORIGENES,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Politica de contenido: solo se ejecuta codigo propio y el de jsDelivr (Bootstrap).
 CSP = ("default-src 'self'; "
