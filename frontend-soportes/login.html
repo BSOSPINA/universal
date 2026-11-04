@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#263746">
+    <title>Entrar · Universal de Partes y Soportes</title>
+    <link rel="icon" href="img/icono.png" type="image/png">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href="img/icono-180.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <main class="login">
+
+        <!-- Lado izquierdo: marca y plano técnico de un soporte en L -->
+        <section class="login-plano">
+            <div class="login-marca">
+                <img src="img/camion.png" alt="" class="logo-camion">
+                <span>Universal de Partes<br>y Soportes</span>
+            </div>
+
+            <svg class="login-dibujo escena" viewBox="0 0 560 470" role="img" aria-label="Camión rojo llegando por la carretera">
+                <defs>
+                    <radialGradient id="luz" cx="0" cy="50%" r="100%">
+                        <stop offset="0" stop-color="#FFE9A0" stop-opacity=".9"/>
+                        <stop offset="1" stop-color="#F4B400" stop-opacity="0"/>
+                    </radialGradient>
+                    <radialGradient id="sombra" cx="50%" cy="50%" r="50%">
+                        <stop offset="0" stop-color="#000" stop-opacity=".55"/>
+                        <stop offset="1" stop-color="#000" stop-opacity="0"/>
+                    </radialGradient>
+                </defs>
+
+                <!-- Rayas de velocidad: se ven mientras el camión llega -->
+                <g class="velocidad" stroke="#B9C4CC" stroke-width="3" stroke-linecap="round">
+                    <path d="M20 150H150"/><path d="M0 215H110"/><path d="M30 280H190"/><path d="M10 340H130"/>
+                </g>
+
+                <!-- Carretera con rayas que corren -->
+                <rect x="0" y="412" width="560" height="58" fill="rgba(0,0,0,.28)"/>
+                <path d="M0 412H560" stroke="#B9C4CC" stroke-width="2" opacity=".6"/>
+                <path class="rayas" d="M0 442H640" stroke="#F4B400" stroke-width="4" stroke-dasharray="46 34" fill="none"/>
+
+                <!-- Sombra bajo el camión -->
+                <ellipse class="sombra-camion" cx="290" cy="410" rx="215" ry="14" fill="url(#sombra)"/>
+
+                <!-- Camión -->
+                <g class="camion-entra">
+                    <g class="camion-bote">
+                        <!-- Humo de los dos escapes -->
+                        <g class="humo" fill="#DCE3E8">
+                            <circle class="h h1" cx="182" cy="62" r="9"/>
+                            <circle class="h h2" cx="182" cy="62" r="9"/>
+                            <circle class="h h3" cx="182" cy="62" r="9"/>
+                            <circle class="h h1 b" cx="334" cy="72" r="9"/>
+                            <circle class="h h2 b" cx="334" cy="72" r="9"/>
+                            <circle class="h h3 b" cx="334" cy="72" r="9"/>
+                        </g>
+                        <image href="img/camion.png" x="80" y="68" width="400" height="335" preserveAspectRatio="xMidYMid meet"/>
+                        <!-- Luz de los faros -->
+                        <ellipse class="faro" cx="470" cy="302" rx="95" ry="26" fill="url(#luz)"/>
+                    </g>
+                </g>
+            </svg>
+
+            <p class="login-frase">Pedidos, facturas e inventario de la planta en un solo lugar.</p>
+        </section>
+
+        <!-- Lado derecho: formulario -->
+        <section class="login-form-zona">
+            <form id="form" class="login-form" novalidate>
+                <h1>Entrar al sistema</h1>
+                <p class="ayuda">Usa el usuario y la contraseña que te dio el administrador.</p>
+
+                <div class="mb-3">
+                    <label class="form-label" for="usuario">Usuario</label>
+                    <input type="text" id="usuario" class="form-control" autocomplete="username" required autofocus>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="clave">Contraseña</label>
+                    <input type="password" id="clave" class="form-control" autocomplete="current-password" required>
+                </div>
+
+                <div id="error" class="login-error d-none" role="alert"></div>
+
+                <button id="btn" type="submit" class="btn btn-primary w-100">Entrar</button>
+                <button id="ir-clave" type="button" class="btn btn-link w-100 mt-2 p-0 enlace-clave">Olvidé / quiero cambiar mi contraseña</button>
+            </form>
+
+            <form id="form-clave" class="login-form d-none" novalidate autocomplete="off">
+                <h1>Cambiar contraseña</h1>
+
+                <!-- Paso 1: pedir el código -->
+                <div id="paso-1">
+                    <p class="ayuda">Escribe tu usuario y te enviaremos un código de verificación al correo registrado.</p>
+                    <div class="mb-3">
+                        <label class="form-label" for="c-usuario">Usuario</label>
+                        <input type="text" id="c-usuario" class="form-control" autocomplete="username" maxlength="60" required>
+                    </div>
+                </div>
+
+                <!-- Paso 2: código + contraseña nueva -->
+                <div id="paso-2" class="d-none">
+                    <p class="ayuda">Te enviamos un código de 6 dígitos. Vence en 10 minutos.</p>
+                    <div class="mb-3">
+                        <label class="form-label" for="c-codigo">Código de verificación</label>
+                        <input type="text" id="c-codigo" class="form-control campo-codigo" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000">
+                    </div>
+                    <div class="mb-1">
+                        <label class="form-label" for="c-nueva">Contraseña nueva</label>
+                        <input type="password" id="c-nueva" class="form-control" autocomplete="new-password" maxlength="72">
+                    </div>
+                    <div class="small text-secondary mb-3">Mínimo 10 caracteres, con mayúsculas, minúsculas y números.</div>
+                    <div class="mb-3">
+                        <label class="form-label" for="c-repite">Repite la contraseña nueva</label>
+                        <input type="password" id="c-repite" class="form-control" autocomplete="new-password" maxlength="72">
+                    </div>
+                </div>
+
+                <div id="c-msg" class="login-error d-none" role="alert" style="white-space:pre-line"></div>
+
+                <button id="c-btn" type="submit" class="btn btn-primary w-100">Enviar código</button>
+                <button id="reenviar" type="button" class="btn btn-link w-100 mt-2 p-0 enlace-clave d-none">Reenviar código</button>
+                <button id="volver-login" type="button" class="btn btn-link w-100 mt-2 p-0 enlace-clave">Volver a entrar</button>
+            </form>
+        </section>
+
+    </main>
+
+    <script src="js/sesion.js"></script>
+    <script src="js/ver-clave.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>
