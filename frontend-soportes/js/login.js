@@ -1,6 +1,6 @@
     // Si la página la sirve el propio servidor (local o en Internet) las rutas son relativas.
     // Solo si abres el HTML con doble clic (file://) apunta al servidor local.
-    const API = "https://universal-r9do.onrender.com";
+    const API = "https://universal-r9da.onrender.com";
 
     if (sessionStorage.getItem("token")) location.href = "index.html";
 
